@@ -1,0 +1,29 @@
+﻿@model WordManipulationApp.Models.ParagraphModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <h2> Paragraph </h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+
+        @using (Html.BeginForm("Paragraph", "Home"))
+        {
+            @*<textarea id="paragraphs"></textarea>*@
+            <label> Enter your text here. System will identify paragraphs from text on next page...!!</label>
+            @Html.TextAreaFor(m => m.CombinedParagraph)
+            <button type="submit" class="btn btn-primary text-center">Parse</button>
+        }
+
+    </div>
+</div>

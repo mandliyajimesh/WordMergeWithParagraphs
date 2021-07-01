@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WordManipulationApp.Models;
 
@@ -9,11 +7,20 @@ namespace WordManipulationApp.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Main method to return view.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Paragraph()
         {
             return View();
         }
 
+        /// <summary>
+        /// This method will parse text into multiple paragraphs.
+        /// </summary>
+        /// <param name="paragraph"></param>
+        /// <returns></returns>
         [HttpPost, ValidateInput(false)]
         public ActionResult Paragraph(ParagraphModel paragraph)
         {
@@ -36,6 +43,10 @@ namespace WordManipulationApp.Controllers
             return RedirectToAction("AssignComponent");
         }
 
+        /// <summary>
+        /// This method will return view to assign components to paragraphs.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult AssignComponent()
         {
             var paragraph = (ParagraphModel)TempData.Peek("paragraph");
@@ -43,6 +54,11 @@ namespace WordManipulationApp.Controllers
             return View(paragraph);
         }
 
+        /// <summary>
+        /// This method will assign components and download merged file.
+        /// </summary>
+        /// <param name="paragraph"></param>
+        /// <returns></returns>
         [HttpPost]
         public FileResult AssignComponent(ParagraphModel paragraph)
         {

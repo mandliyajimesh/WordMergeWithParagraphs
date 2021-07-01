@@ -2,10 +2,8 @@
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using WordManipulationApp.Models;
 
 namespace WordManipulationApp
@@ -20,6 +18,14 @@ namespace WordManipulationApp
         public string HeaderFile = AppDomain.CurrentDomain.BaseDirectory + "Files\\HeaderComponent.docx";
         public string PictureFile = AppDomain.CurrentDomain.BaseDirectory + "Files\\PictureComponent.docx";
 
+        /// <summary>
+        /// This method will add text and after adding text it will copy content from selected component word file.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="componentType"></param>
+        /// <param name="OutputFile"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public bool ProcessWord(string text, ComponentEnum componentType, string OutputFile, int index)
         {
             using (WordprocessingDocument myDoc =
@@ -37,6 +43,10 @@ namespace WordManipulationApp
             return true;
         }
 
+        /// <summary>
+        /// This method will create an empty word document.
+        /// </summary>
+        /// <param name="path"></param>
         public void CreateEmptyDocument(string path)
         {
             if (File.Exists(path))
@@ -50,7 +60,14 @@ namespace WordManipulationApp
                 mainPart.Document = new Document(new Body());
             }
         }
-private void CopyWord(string file, MainDocumentPart mainPart, string altChunkId)
+
+        /// <summary>
+        /// This method will copy content from passed file.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="mainPart"></param>
+        /// <param name="altChunkId"></param>
+        private void CopyWord(string file, MainDocumentPart mainPart, string altChunkId)
         {
             AlternativeFormatImportPart chunk =
                 mainPart.AddAlternativeFormatImportPart(
@@ -66,6 +83,11 @@ private void CopyWord(string file, MainDocumentPart mainPart, string altChunkId)
                 .Elements<Paragraph>().Last());
         }
 
+        /// <summary>
+        /// This method will add text in word document.
+        /// </summary>
+        /// <param name="mainPart"></param>
+        /// <param name="text"></param>
         private void AddText(MainDocumentPart mainPart, string text)
         {
             Paragraph para = mainPart.Document.Body.AppendChild(new Paragraph());
@@ -73,6 +95,11 @@ private void CopyWord(string file, MainDocumentPart mainPart, string altChunkId)
             run.AppendChild(new Text(text));
         }
 
+        /// <summary>
+        /// This method will get file name based on passed component.
+        /// </summary>
+        /// <param name="componentType"></param>
+        /// <returns></returns>
         private string GetFileName(ComponentEnum componentType)
         {
             var result = string.Empty;
